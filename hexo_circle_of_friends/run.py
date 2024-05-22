@@ -38,10 +38,10 @@ def settings_friends_json_parse(json_file, user_conf):
     :param user_conf: 配置
     :return:
     """
-    if not json_file.get("friends"):
-        logger.warning(f"json_api格式错误：没有friends字段")
+    if not json_file.get("data"):
+        logger.warning(f"json_api格式错误：没有data字段")
         return
-    friends = json_file["friends"]
+    friends = json_file["data"]
     # 数据形式：0：未知；1：普通格式；2：进阶格式
     data_type = 0
     try:
@@ -58,12 +58,12 @@ def settings_friends_json_parse(json_file, user_conf):
     elif data_type == 2:
         # 进阶格式
         try:
-            for dic in json_file["friends"]:
-                link_list = dic["link_list"]
-                for link in link_list:
+            for link in json_file["data"]:
+                # link_list = dic["link_list"]
+                # for link in link_list:
                     # 必须有name、link、avatar字段
                     name = link.get("name")
-                    friendlink = link.get("link")
+                    friendlink = link.get("url")
                     avatar = link.get("avatar")
                     suffix = link.get("suffix")
                     if name and friendlink and avatar:
